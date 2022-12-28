@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MemoryGame_Team4</string>
+    <string name="fetch_btn">FETCH</string>
+
 </resources>
