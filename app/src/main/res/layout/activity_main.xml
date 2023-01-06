@@ -18,14 +18,16 @@
         >
 
         <EditText
+            android:id="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:hint="https://www."
+            android:hint="https://"
 
             />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fetch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -45,6 +47,7 @@
         android:layout_weight="1"
         >
         <ImageView
+            android:id="@+id/imgView1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -52,6 +55,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -59,6 +63,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -66,6 +71,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -79,6 +85,7 @@
         android:layout_weight="1"
         >
         <ImageView
+            android:id="@+id/imgView5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -87,6 +94,7 @@
 
             />
         <ImageView
+            android:id="@+id/imgView6"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -94,6 +102,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -101,6 +110,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -114,6 +124,7 @@
         android:layout_weight="1"
         android:text="Box_3">
         <ImageView
+            android:id="@+id/imgView9"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -121,6 +132,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView10"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -128,6 +140,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView11"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -135,6 +148,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView12"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -149,6 +163,7 @@
         android:layout_weight="1"
         android:text="Box_4">
         <ImageView
+            android:id="@+id/imgView13"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -157,6 +172,7 @@
 
             />
         <ImageView
+            android:id="@+id/imgView14"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -164,6 +180,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -171,6 +188,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView16"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -185,6 +203,7 @@
         android:text="Box_5"
         >
         <ImageView
+            android:id="@+id/imgView17"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -193,6 +212,7 @@
 
             />
         <ImageView
+            android:id="@+id/imgView18"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -200,6 +220,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView19"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -207,6 +228,7 @@
             android:src="@drawable/cross"
             />
         <ImageView
+            android:id="@+id/imgView20"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -231,9 +253,5 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5" />
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>
