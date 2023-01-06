@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (action.equals("download_completed")) {
                 String filename = intent.getStringExtra("filename");
                 int imgViewId = intent.getIntExtra("count", 0);
-                if(imgViewId <= 20){
+                if (imgViewId <= 20) {
                     updateImageView(filename, imgViewId);
                 } else return;
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        twentyImageURLs = new ArrayList<>();
         fetch_btn = findViewById(R.id.fetch_btn);
         fetch_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 String url = url_input.getText().toString();
                 fetchImageURLs("https://stocksnap.io/");
                 int count = getIntent().getIntExtra("count", 0);
-                for(String imgURL : twentyImageURLs){
-                    if(count != 20){
+                for (String imgURL : twentyImageURLs) {
+                    if (count != 20) {
                         count++;
                         startDownloadImage(imgURL, count);
                     } else return;
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
         initReceiver();
     }
+
     protected void initReceiver() {
         IntentFilter filter = new IntentFilter();
         filter.addAction("download_completed");
@@ -78,9 +79,10 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
     }
 
-    public void setupImgListener(){
+    public void setupImgListener() {
 
     }
+
     protected void startDownloadImage(String imgURL, int count) {
         Intent intent = new Intent(this, ImageDLService.class);
         intent.setAction("download_file");
@@ -90,47 +92,49 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    protected void updateImageView(String filename, int imgId){
+    protected void updateImageView(String filename, int imgId) {
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File fileDestination = new File(dir, filename);
 
         Bitmap bitmap = BitmapFactory.decodeFile(fileDestination.getAbsolutePath());
 
         Resources res = getResources();
-        ImageView imageView = (ImageView)findViewById(res.getIdentifier("imgView"+ imgId, "id", getPackageName()));
+        ImageView imageView = (ImageView) findViewById(res.getIdentifier("imgView" + imgId, "id", getPackageName()));
 //        ImageView imageView1 = findViewById(R.id.imgView1);
 
         imageView.setImageBitmap(bitmap);
     }
 
-    protected void fetchImageURLs(String URL){
+    protected void fetchImageURLs(String URL) {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    twentyImageURLs = new ArrayList<>();
-                    Document doc = Jsoup.connect(URL).get();
+                Document doc = null;
+                try {
 
-                    if(doc != null){
+                    doc = Jsoup.connect(URL).get();
+
+                    if (doc != null) {
                         Elements el = doc.select("img");
 
-                        for(int i=0; i <= 20; i++){
+                        for (int i = 0; i <= 20; i++) {
                             String imgURL = el
 //                                    .select("img")
                                     .eq(i)
                                     .attr("src");
-                            if(imgURL.endsWith(".png")
+                            if (imgURL.endsWith(".png")
                                     || imgURL.endsWith(".jpg")
-                                    || imgURL.endsWith(".jpeg")){
+                                    || imgURL.endsWith(".jpeg")) {
                                 twentyImageURLs.add(imgURL);
                             }
-                            Log.d("ImageURLS", "ImageURLS: "+ imgURL);
+//                            Log.d("ImageURLS", "ImageURLS: " + imgURL);
                         }
                     }
-                } catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+
         });
         thread.start();
 
