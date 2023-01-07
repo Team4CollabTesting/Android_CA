@@ -13,11 +13,13 @@ import android.os.Environment;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> twentyImageURLs;
     private Button fetch_btn;
     private EditText url_input;
-    private String imgURLTest;
     private Thread thread;
-    private int dlImgCount = 0;
     private ProgressBar progressBar;
     private TextView progressMessage;
 
@@ -44,13 +44,20 @@ public class MainActivity extends AppCompatActivity {
 
             if (action.equals("download_completed")) {
                 String filename = intent.getStringExtra("filename");
-                int imgViewId = intent.getIntExtra("count", 0);
-                if (imgViewId <= 20) {
-                    updateImageView(filename, imgViewId);
+                int count = intent.getIntExtra("count", 0);
+
+                    updateImageView(filename, count);
+                    twentyImages.add(filename);
+//                int count = getIntent().getIntExtra("count", 0);
+                if (count < twentyImageURLs.size()) {
+                    count++;
+                    startDownloadImage(twentyImageURLs.get(count-1), count);
                 } else return;
 
+                }
+
             }
-        }
+
     };
 
     @Override
@@ -58,26 +65,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         twentyImageURLs = new ArrayList<>();
+        twentyImages = new ArrayList<>();
+        progressBar = findViewById(R.id.progressBar);
+        progressMessage = findViewById(R.id.progressMsg);
+
         fetch_btn = findViewById(R.id.fetch_btn);
         fetch_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                twentyImageURLs.clear();
+
+                if (thread != null) {
+                    interruptThread();
+                }
                 url_input = findViewById(R.id.url);
                 String url = url_input.getText().toString();
-                fetchImageURLs("https://stocksnap.io/");
-                int count = getIntent().getIntExtra("count", 0);
-                for (String imgURL : twentyImageURLs) {
-                    if (count != 20) {
-                        count++;
-                        startDownloadImage(imgURL, count);
-                    } else return;
+                validateURL(url);
 
-                }
+                fetchImageURLs("https://stocksnap.io/");
+                try{
+                    thread.join();}
+                catch(InterruptedException e){
+                    System.out.println("InterruptedException");}
+                validateImageURL();
+
+                startDownloadImage(twentyImageURLs.get(0), 1);
             }
         });
+
+
         initReceiver();
     }
+
+
 
     protected void initReceiver() {
         IntentFilter filter = new IntentFilter();
@@ -112,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
 
         imageView.setImageBitmap(resized);
     }
+    protected void updateProgress(){
+
+    }
 
     protected void fetchImageURLs(String URL) {
         thread = new Thread(new Runnable() {
@@ -120,34 +142,62 @@ public class MainActivity extends AppCompatActivity {
                 Document doc = null;
                 try {
                     doc = Jsoup.connect(URL).get();
-
-                    if (doc != null) {
-                        Elements el = doc.select("img");
-                        int pointer = 0;
-                        int loop =0;
-                        while (pointer < 20) {
-                            String imgURL = el
-                                    .select("img")
-                                    .eq(loop)
-                                    .attr("src");
-                            if (imgURL.endsWith(".png")
-                                    || imgURL.endsWith(".jpg")
-                                    || imgURL.endsWith(".jpeg")) {
-                                twentyImageURLs.add(imgURL);
-                                pointer++;
-                            }
-                            loop++;
-//                            Log.d("ImageURLS", "ImageURLS: " + imgURL);
-                        }
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (doc != null) {
+                    Elements el = doc.select("img");
+                    int loop =0;
+                    while (twentyImageURLs.size() < 20) {
+                        String imgURL = el
+                                .select("img")
+                                .eq(loop)
+                                .attr("src");
+                        if (imgURL.endsWith(".png")
+                                || imgURL.endsWith(".jpg")
+                                || imgURL.endsWith(".jpeg")) {
+                            twentyImageURLs.add(imgURL);
+                        }
+                        loop++;
+//                            Log.d("ImageURLS", "ImageURLS: " + imgURL);
+                    }
+                }
             }
-
         });
         thread.start();
+    }
+
+    public void showReadyUI()
+    {
+        url_input.setText("");
+        for(int i=1; i <= 20 ; i++){
+            Resources res = getResources();
+            ImageView imageView = (ImageView) findViewById(res.getIdentifier("imgView" + i, "id", getPackageName()));
+            imageView.setImageResource(R.drawable.cross);
+        }
+        twentyImages.clear();
+        twentyImageURLs.clear();
+        progressMessage.setText("");
 
 
+    }
+
+    public void validateURL(String url){
+        if(!URLUtil.isValidUrl(url)){
+            Toast.makeText(getApplicationContext(), "Invalid URL, please try again!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+    public void validateImageURL (){
+        if(twentyImageURLs.size() < 20){
+            Toast.makeText(getApplicationContext()
+                    , "Current URL does not contain enough images to start the game, please choose a different URL"
+                    , Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+    public void interruptThread(){
+        thread.interrupt();
+        showReadyUI();
     }
 }
