@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText url_input;
     private String imgURLTest;
     private Thread thread;
+    private int dlImgCount = 0;
+    private ProgressBar progressBar;
+    private TextView progressMessage;
 
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         fetch_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                twentyImageURLs.clear();
                 url_input = findViewById(R.id.url);
                 String url = url_input.getText().toString();
                 fetchImageURLs("https://stocksnap.io/");
@@ -97,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
         File fileDestination = new File(dir, filename);
 
         Bitmap bitmap = BitmapFactory.decodeFile(fileDestination.getAbsolutePath());
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, 150, 150, true);
 
         Resources res = getResources();
         ImageView imageView = (ImageView) findViewById(res.getIdentifier("imgView" + imgId, "id", getPackageName()));
 //        ImageView imageView1 = findViewById(R.id.imgView1);
 
-        imageView.setImageBitmap(bitmap);
+        imageView.setImageBitmap(resized);
     }
 
     protected void fetchImageURLs(String URL) {
@@ -111,22 +119,24 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Document doc = null;
                 try {
-
                     doc = Jsoup.connect(URL).get();
 
                     if (doc != null) {
                         Elements el = doc.select("img");
-
-                        for (int i = 0; i <= 20; i++) {
+                        int pointer = 0;
+                        int loop =0;
+                        while (pointer < 20) {
                             String imgURL = el
-//                                    .select("img")
-                                    .eq(i)
+                                    .select("img")
+                                    .eq(loop)
                                     .attr("src");
                             if (imgURL.endsWith(".png")
                                     || imgURL.endsWith(".jpg")
                                     || imgURL.endsWith(".jpeg")) {
                                 twentyImageURLs.add(imgURL);
+                                pointer++;
                             }
+                            loop++;
 //                            Log.d("ImageURLS", "ImageURLS: " + imgURL);
                         }
                     }
