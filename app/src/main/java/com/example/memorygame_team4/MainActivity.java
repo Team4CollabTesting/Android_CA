@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -27,10 +28,12 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<String> twentyImages;
     private ArrayList<String> twentyImageURLs;
+    private ArrayList<String> sixImages;
     private Button fetch_btn;
     private EditText url_input;
     private Thread thread;
@@ -47,56 +50,77 @@ public class MainActivity extends AppCompatActivity {
                 int count = intent.getIntExtra("count", 0);
 
                     updateImageView(filename, count);
+                    updateProgress();
                     twentyImages.add(filename);
-//                int count = getIntent().getIntExtra("count", 0);
                 if (count < twentyImageURLs.size()) {
                     count++;
                     startDownloadImage(twentyImageURLs.get(count-1), count);
                 } else return;
-
                 }
-
             }
-
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         twentyImageURLs = new ArrayList<>();
         twentyImages = new ArrayList<>();
+        sixImages = new ArrayList<>();
         progressBar = findViewById(R.id.progressBar);
         progressMessage = findViewById(R.id.progressMsg);
 
+        setupFetchBtn();
+        initReceiver();
+        setupImageListener();
+
+    }
+    public void setupFetchBtn(){
         fetch_btn = findViewById(R.id.fetch_btn);
         fetch_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (thread != null) {
-                    interruptThread();
-                }
+                if (thread != null) {interruptThread();}
                 url_input = findViewById(R.id.url);
                 String url = url_input.getText().toString();
                 validateURL(url);
+                fetchImageURLs(url);
 
-                fetchImageURLs("https://stocksnap.io/");
                 try{
                     thread.join();}
                 catch(InterruptedException e){
                     System.out.println("InterruptedException");}
-                validateImageURL();
 
+                validateImageURL();
                 startDownloadImage(twentyImageURLs.get(0), 1);
             }
         });
-
-
-        initReceiver();
     }
 
+    public void setupImageListener(){
+        for(int i=1; i <= 20 ; i++){
+            Resources res = getResources();
+            ImageView imageView = (ImageView) findViewById(res.getIdentifier("imgView" + i, "id", getPackageName()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String idName = getResources().getResourceEntryName(v.getId());
+                    int index = Integer.parseInt(idName.substring(7));
 
+                    if(!sixImages.contains(twentyImages.get(index-1))){
+                        if(sixImages.size() < 6){
+                            selectImage(imageView, index-1);
+                        }
+                    }else {
+                        unselectImage(imageView, index-1);
+                    }
+                    if(sixImages.size() == 6){
+                        launchGameActivity();
+                    }
+                }
+            });
+        }
+    }
 
     protected void initReceiver() {
         IntentFilter filter = new IntentFilter();
@@ -105,9 +129,6 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, filter);
     }
 
-    public void setupImgListener() {
-
-    }
 
     protected void startDownloadImage(String imgURL, int count) {
         Intent intent = new Intent(this, ImageDLService.class);
@@ -132,7 +153,14 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageBitmap(resized);
     }
     protected void updateProgress(){
-
+        int curProgress =  progressBar.getProgress();
+        if(curProgress != 95){
+            progressBar.setProgress(curProgress + 5);
+            progressMessage.setText("Downloading: "+ curProgress+ "%");
+        } else {
+            progressBar.setProgress(curProgress +5);
+            progressMessage.setText("Download Complete ✅");
+        }
     }
 
     protected void fetchImageURLs(String URL) {
@@ -178,8 +206,28 @@ public class MainActivity extends AppCompatActivity {
         twentyImages.clear();
         twentyImageURLs.clear();
         progressMessage.setText("");
+        progressBar.setProgress(0);
+        sixImages.clear();
 
+    }
+    public void selectImage(ImageView img,int fileLocation){
+        img.setBackgroundResource(R.drawable.border_image);
+        sixImages.add(twentyImages.get(fileLocation));
 
+    }
+    public void unselectImage(ImageView img,int fileLocation){
+
+        sixImages.remove(twentyImages.get(fileLocation));
+        img.setBackgroundResource(0);
+    }
+    public void launchGameActivity(){
+        Intent intent = new Intent(this, GameActivity.class);
+        ArrayList<String> chosenImages = new ArrayList<>();
+        chosenImages.addAll(sixImages);
+        chosenImages.addAll(sixImages);
+        Collections.shuffle(chosenImages);
+        intent.putExtra("chosenImages", chosenImages);
+        startActivity(intent);
     }
 
     public void validateURL(String url){
