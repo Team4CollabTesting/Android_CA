@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         setupFetchBtn();
         initReceiver();
         setupImageListener();
-
     }
     public void setupFetchBtn(){
         fetch_btn = findViewById(R.id.fetch_btn);
@@ -84,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 if (thread != null) {interruptThread();}
                 url_input = findViewById(R.id.url);
                 String url = url_input.getText().toString();
-                validateURL(url);
                 fetchImageURLs(url);
 
                 try{
@@ -234,7 +232,6 @@ public class MainActivity extends AppCompatActivity {
     public void validateURL(String url){
         if(!URLUtil.isValidUrl(url)){
             Toast.makeText(getApplicationContext(), "Invalid URL, please try again!", Toast.LENGTH_SHORT).show();
-            return;
         }
     }
     public void validateImageURL (){
