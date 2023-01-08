@@ -14,18 +14,16 @@
         android:orientation="horizontal"
         android:layout_weight="0.2"
         android:layout_marginTop="5dp"
-        android:gravity="center"
-        >
-
+        android:gravity="center" >
         <EditText
+            android:id="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="9"
-            android:hint="https://www."
-
+            android:hint="https://"
             />
-
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fetch_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -35,7 +33,6 @@
             android:textSize="20sp"
             android:background="@drawable/fetch_btn"
             android:textColor="@color/white"
-
             />
 
     </LinearLayout>
@@ -45,32 +42,39 @@
         android:layout_weight="1"
         >
         <ImageView
+            android:id="@+id/imgView1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="1,1"
+            android:padding="4dp"
+            android:layout_margin="6dp"
+            android:src="@drawable/cross"/>
+        <ImageView
+            android:id="@+id/imgView2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="1,2"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="1,3"
             android:src="@drawable/cross"
-            />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="1,4"
-            android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -79,33 +83,40 @@
         android:layout_weight="1"
         >
         <ImageView
+            android:id="@+id/imgView5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="2,1"
             android:src="@drawable/cross"
-
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView6"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="2,2"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="2,3"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="2,4"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -114,34 +125,41 @@
         android:layout_weight="1"
         android:text="Box_3">
         <ImageView
+            android:id="@+id/imgView9"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="3,1"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView10"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="3,2"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView11"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="3,3"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView12"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="3,4"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -149,33 +167,40 @@
         android:layout_weight="1"
         android:text="Box_4">
         <ImageView
+            android:id="@+id/imgView13"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="4,1"
             android:src="@drawable/cross"
-
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView14"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="4,2"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="4,3"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView16"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="4,4"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
     </LinearLayout>
     <LinearLayout
@@ -185,33 +210,40 @@
         android:text="Box_5"
         >
         <ImageView
+            android:id="@+id/imgView17"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="5,1"
             android:src="@drawable/cross"
-
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView18"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="5,2"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="5dp"
             />
         <ImageView
+            android:id="@+id/imgView19"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="5,3"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
         <ImageView
+            android:id="@+id/imgView20"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="5,4"
             android:src="@drawable/cross"
+            android:padding="4dp"
+            android:layout_margin="6dp"
             />
     </LinearLayout>
 
@@ -222,18 +254,28 @@
         android:orientation="vertical">
 
         <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="#f2f2f2"
+            android:padding="12dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/progress_bar"
+            android:visibility="visible" />
 
         <TextView
+            android:id="@+id/progressMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:text=""
+            android:visibility="visible"/>
+
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>
