@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Thread thread;
     private ProgressBar progressBar;
     private TextView progressMessage;
+    private TextView score;
 
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
