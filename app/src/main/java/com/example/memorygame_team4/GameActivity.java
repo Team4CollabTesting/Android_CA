@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
     private String secondClick_fileName;
     private int score;
     private TextView score_display;
+    private Chronometer display_timer;
     private ArrayList<Integer> openedImages;
 
 
@@ -99,6 +101,8 @@ public class GameActivity extends AppCompatActivity {
         openedImages = new ArrayList<>();
         score = 0;
         score_display = findViewById(R.id.score_display);
+        display_timer = findViewById(R.id.display_timer);
+        display_timer.start();
     }
     public void resetPointers(){
         firstClickIndex = 0;
@@ -119,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
     public void launchMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         if(score == 6){
+            display_timer.stop();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
